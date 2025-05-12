@@ -1,0 +1,43 @@
+{
+  "Rock": {
+    "Iron Maiden": [
+      "The Trooper",
+      "Fear of the Dark",
+      "Run to the Hills",
+      "Hallowed Be Thy Name",
+      "Aces High"
+    ],
+    "Queen": [
+      "Bohemian Rhapsody",
+      "Don't Stop Me Now",
+      "We Will Rock You",
+      "Somebody to Love",
+      "Radio Ga Ga"
+    ]
+  },
+  "Reggae": {
+    "Bob Marley": [
+      "No Woman, No Cry",
+      "Three Little Birds",
+      "Redemption Song",
+      "Buffalo Soldier",
+      "One Love"
+    ]
+  },
+  "Pop": {
+    "Abba": [
+      "Dancing Queen",
+      "Mamma Mia",
+      "Waterloo",
+      "Take a Chance on Me",
+      "Gimme! Gimme! Gimme!"
+    ],
+    "Bee Gees": [
+      "Stayin' Alive",
+      "How Deep Is Your Love",
+      "Night Fever",
+      "Tragedy",
+      "To Love Somebody"
+    ]
+  }
+}
