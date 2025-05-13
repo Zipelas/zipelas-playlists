@@ -7,40 +7,39 @@
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-black text-teal-400 min-h-screen">
-  <div class="container mx-auto px-4 py-8">
-    <h1 class="text-4xl font-bold mb-6 border-b-2 border-teal-500 pb-2">
-      Zipelas Playlists
-    </h1>
-
-    <!-- Playlist Container -->
-    <div id="playlists" class="space-y-6">
-      <!-- Dynamiskt innehåll läggs in här -->
+    <div class="container mx-auto px-4 py-8">
+      <h1 class="text-4xl font-bold mb-6 border-b-2 border-teal-500 pb-2">
+        Zipelas Playlists
+      </h1>
+  
+      <!-- Formulär -->
+      <div class="mt-10">
+        <form id="playlistForm" class="space-y-4 mb-10">
+          <div>
+            <label class="block text-sm text-white">Genre</label>
+            <input type="text" id="genre" class="w-full p-2 bg-gray-800 text-white rounded" placeholder="t.ex. Rock" required>
+          </div>
+          <div>
+            <label class="block text-sm text-white">Artist</label>
+            <input type="text" id="artist" class="w-full p-2 bg-gray-800 text-white rounded" placeholder="t.ex. Queen" required>
+          </div>
+          <div>
+            <label class="block text-sm text-white">Låt</label>
+            <input type="text" id="song" class="w-full p-2 bg-gray-800 text-white rounded" placeholder="t.ex. Bohemian Rhapsody" required>
+          </div>
+          <button type="submit" class="bg-teal-500 text-black px-4 py-2 rounded hover:bg-teal-400">
+            Lägg till låt
+          </button>
+        </form>
+      </div>
+  
+      <!-- Spellistorna visas här, under formuläret -->
+      <div id="playlists" class="space-y-6">
+        <!-- Dynamiskt innehåll -->
+      </div>
     </div>
-
-    <!-- Placeholder för framtida UI -->
-    <div class="mt-10">
-      <p class="text-gray-400">Formulär och knappar kommer här...</p>
-      <form id="playlistForm" class="space-y-4 mb-10">
-        <div>
-          <label class="block text-sm text-white">Genre</label>
-          <input type="text" id="genre" class="w-full p-2 bg-gray-800 text-white rounded" placeholder="t.ex. Rock" required>
-        </div>
-        <div>
-          <label class="block text-sm text-white">Artist</label>
-          <input type="text" id="artist" class="w-full p-2 bg-gray-800 text-white rounded" placeholder="t.ex. Queen" required>
-        </div>
-        <div>
-          <label class="block text-sm text-white">Låt</label>
-          <input type="text" id="song" class="w-full p-2 bg-gray-800 text-white rounded" placeholder="t.ex. Bohemian Rhapsody" required>
-        </div>
-        <button type="submit" class="bg-teal-500 text-black px-4 py-2 rounded hover:bg-teal-400">
-          Lägg till låt
-        </button>
-      </form>
-      
-    </div>
-  </div>
-
-  <script type="module" src="./app.js"></script>
-</body>
+  
+    <script type="module" src="./app.js"></script>
+  </body>
+  
 </html>
