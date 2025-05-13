@@ -1,44 +1,51 @@
 import * as model from '../models/playlistModel.js';
 import * as view from '../views/playlistView.js';
 
-// Startar appen
 export const initApp = async () => {
-  await model.loadPlaylists(); // 👈 Ladda från JSON-fil
+  await model.loadPlaylists();
   const playlists = model.getAllPlaylists();
   view.renderPlaylists(playlists);
+  setupDeleteListeners();
   setupFormListener();
 };
 
-// Lyssnar på formuläret
 const setupFormListener = () => {
   const form = document.getElementById('playlistForm');
+
   form.addEventListener('submit', (e) => {
     e.preventDefault();
 
-    // Hämta inputvärden
     const genre = document.getElementById('genre').value.trim();
     const artist = document.getElementById('artist').value.trim();
     const song = document.getElementById('song').value.trim();
 
-    // Validering
     if (!genre || !artist || !song) {
       alert('Fyll i alla fält.');
       return;
     }
 
-    // Skapa spellista med EN låt
     const newPlaylist = {
       genre,
       name: `${genre} – ${artist}`,
       description: `Spellista med ${artist} i genren ${genre}`,
-      songs: [{ title: song, artist: artist }],
+      songs: [{ title: song, artist }],
     };
 
-    // Lägg till och rendera
     model.addPlaylist(newPlaylist);
     view.renderPlaylists(model.getAllPlaylists());
-
-    // Rensa formulär
+    setupDeleteListeners();
     form.reset();
+  });
+};
+
+const setupDeleteListeners = () => {
+  const buttons = document.querySelectorAll('.delete-btn');
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const id = parseInt(btn.dataset.id);
+      model.deletePlaylist(id);
+      view.renderPlaylists(model.getAllPlaylists());
+      setupDeleteListeners(); // bind knappar igen efter re-render
+    });
   });
 };
