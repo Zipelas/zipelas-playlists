@@ -1,6 +1,7 @@
 [
   {
     "id": 1,
+    "genre": "Rock",
     "name": "Rockklassiker",
     "description": "De bästa rocklåtarna från Iron Maiden och Queen",
     "songs": [
@@ -18,6 +19,7 @@
   },
   {
     "id": 2,
+    "genre": "Reggae",
     "name": "Reggae Vibes",
     "description": "Chilla med Bob Marleys skönaste hits",
     "songs": [
@@ -30,6 +32,7 @@
   },
   {
     "id": 3,
+    "genre": "Pop",
     "name": "Pop Explosion",
     "description": "Abba och Bee Gees levererar popens pärlor",
     "songs": [
