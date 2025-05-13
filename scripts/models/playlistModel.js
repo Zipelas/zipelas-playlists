@@ -9,6 +9,10 @@ export const addPlaylist = (playlist) => {
   });
 };
 
+export const deletePlaylist = (id) => {
+  playlists = playlists.filter((pl) => pl.id !== id);
+};
+
 export const loadPlaylists = async () => {
   const res = await fetch('../../data/musicData.json');
   playlists = await res.json();
