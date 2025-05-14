@@ -8,6 +8,30 @@ export const initApp = async () => {
   setupDeleteListeners();
   setupFormListener();
   setupSearch();
+  setupSongAddListeners();
+};
+
+const setupSongAddListeners = () => {
+  const addButtons = document.querySelectorAll('.add-song');
+
+  addButtons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const playlistId = parseInt(btn.dataset.playlistId);
+      const songIndex = parseInt(btn.dataset.songIndex);
+
+      const playlists = model.getAllPlaylists();
+      const playlist = playlists.find((p) => p.id === playlistId);
+      const song = playlist.songs[songIndex];
+
+      if (song) {
+        playlist.songs.push({ ...song }); // duplicera låten
+        view.renderPlaylists(playlists);
+        setupDeleteListeners();
+        setupSongDeleteListeners();
+        setupSongAddListeners(); // <-- viktigt att re-binda
+      }
+    });
+  });
 };
 
 const setupSearch = () => {

@@ -45,11 +45,28 @@ export const renderPlaylists = (playlists, searchTerm = '') => {
       <h2 class="text-xl font-bold text-teal-400">${pl.name}</h2>
       <p class="italic text-gray-300">${pl.description || ''}</p>
       <p class="text-sm text-teal-300 mb-2">Genre: ${pl.genre}</p>
-      <ul class="list-disc list-inside mb-4">
+      <ul class="list-disc list-inside mb-4 space-y-1">
         ${filteredSongs
-          .map((song) => `<li>${song.title} - ${song.artist}</li>`)
+          .map(
+            (song, index) => `
+          <li class="flex justify-between items-center gap-2">
+            <span>${song.title} - ${song.artist}</span>
+            <div class="flex gap-2">
+              <button class="add-song text-teal-400 hover:text-green-400" title="Lägg till liknande låt"
+                data-playlist-id="${pl.id}" data-song-index="${index}">
+                ➕
+              </button>
+              <button class="delete-song text-teal-400 hover:text-red-500" title="Ta bort låt"
+                data-playlist-id="${pl.id}" data-song-index="${index}">
+                ❌
+              </button>
+            </div>
+          </li>
+        `
+          )
           .join('')}
       </ul>
+
       <button class="delete-btn bg-red-600 hover:bg-red-500 text-white px-3 py-1 rounded" data-id="${
         pl.id
       }">
