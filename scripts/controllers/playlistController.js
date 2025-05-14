@@ -7,20 +7,32 @@ export const initApp = async () => {
   view.renderPlaylists(playlists);
   setupDeleteListeners();
   setupFormListener();
-  setupGenreSearch();
+  setupSearch();
 };
 
-const setupGenreSearch = () => {
-  const searchInput = document.getElementById('genreSearch');
+const setupSearch = () => {
+  const searchInput = document.getElementById('searchInput');
 
   searchInput.addEventListener('input', () => {
     const searchTerm = searchInput.value.toLowerCase();
     const allPlaylists = model.getAllPlaylists();
-    const filtered = allPlaylists.filter((p) =>
-      p.genre.toLowerCase().includes(searchTerm)
-    );
-    view.renderPlaylists(filtered);
-    setupDeleteListeners(); // återbind knappar
+
+    const filtered = allPlaylists.filter((playlist) => {
+      const matchGenre = playlist.genre.toLowerCase().includes(searchTerm);
+      const matchName = playlist.name.toLowerCase().includes(searchTerm);
+      const matchDescription =
+        playlist.description?.toLowerCase().includes(searchTerm) || false;
+      const matchSongs = playlist.songs.some(
+        (song) =>
+          song.artist.toLowerCase().includes(searchTerm) ||
+          song.title.toLowerCase().includes(searchTerm)
+      );
+
+      return matchGenre || matchName || matchDescription || matchSongs;
+    });
+
+    view.renderPlaylists(filtered, searchTerm); // 👈 skickar söktermen till vyn
+    setupDeleteListeners();
   });
 };
 

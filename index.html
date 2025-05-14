@@ -13,18 +13,23 @@
       </h1>
 
       <div class="mb-6">
-        <label for="genreSearch" class="block text white mb-1"></label>
+        <label for="searchInput" class="block text-white mb-1">Sök spellist, genre, artist eller låt</label>
         <input
-        type="text"
-        id="genreSearch"
-        placeholder="Search"
-        class="w-full sm:w-64 p-2 bg-gray-800 text-white rounded"
-      />
+          type="text"
+          id="searchInput"
+          placeholder="Sök t.ex. Playlist, Reggae, Queen eller Mamma mia"
+          class="w-full sm:w-164 p-2 bg-gray-800 text-white rounded"
+        />
       </div>
+      
   
       <!-- Formulär -->
       <div class="mt-10">
         <form id="playlistForm" class="space-y-4 mb-10">
+          <div>
+            <label class="block text-sm text-white">Spellista</label>
+            <input type="text" id="playlist" class="w-full p-2 bg-gray-800 text-white rounded" placeholder="Namn på spellista" required>
+          </div>
           <div>
             <label class="block text-sm text-white">Genre</label>
             <input type="text" id="genre" class="w-full p-2 bg-gray-800 text-white rounded" placeholder="t.ex. Rock" required>
