@@ -7,7 +7,23 @@ export const initApp = async () => {
   view.renderPlaylists(playlists);
   setupDeleteListeners();
   setupFormListener();
+  setupGenreSearch();
 };
+
+const setupGenreSearch = () => {
+  const searchInput = document.getElementById('genreSearch');
+
+  searchInput.addEventListener('input', () => {
+    const searchTerm = searchInput.value.toLowerCase();
+    const allPlaylists = model.getAllPlaylists();
+    const filtered = allPlaylists.filter((p) =>
+      p.genre.toLowerCase().includes(searchTerm)
+    );
+    view.renderPlaylists(filtered);
+    setupDeleteListeners(); // återbind knappar
+  });
+};
+
 
 const setupFormListener = () => {
   const form = document.getElementById('playlistForm');
