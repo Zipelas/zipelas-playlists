@@ -3,93 +3,20 @@ import * as view from '../views/playlistView.js';
 
 export const initApp = async () => {
   await model.loadPlaylists();
-  const playlists = model.getAllPlaylists();
-  view.renderPlaylists(playlists);
+  view.renderPlaylists(model.getAllPlaylists());
+  rebindAll();
+};
+
+// 🔁 Samlad funktion för att binda om allt efter varje render
+const rebindAll = () => {
   setupDeleteListeners();
-  setupFormListener();
-  setupSearch();
+  setupSongDeleteListeners();
   setupSongAddListeners();
+  setupSongCopyListeners();
+  setupAddSongForm();
 };
 
-const setupSongAddListeners = () => {
-  const addButtons = document.querySelectorAll('.add-song');
-
-  addButtons.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const playlistId = parseInt(btn.dataset.playlistId);
-      const songIndex = parseInt(btn.dataset.songIndex);
-
-      const playlists = model.getAllPlaylists();
-      const playlist = playlists.find((p) => p.id === playlistId);
-      const song = playlist.songs[songIndex];
-
-      if (song) {
-        playlist.songs.push({ ...song }); // duplicera låten
-        view.renderPlaylists(playlists);
-        setupDeleteListeners();
-        setupSongDeleteListeners();
-        setupSongAddListeners(); // <-- viktigt att re-binda
-      }
-    });
-  });
-};
-
-const setupSearch = () => {
-  const searchInput = document.getElementById('searchInput');
-
-  searchInput.addEventListener('input', () => {
-    const searchTerm = searchInput.value.toLowerCase();
-    const allPlaylists = model.getAllPlaylists();
-
-    const filtered = allPlaylists.filter((playlist) => {
-      const matchGenre = playlist.genre.toLowerCase().includes(searchTerm);
-      const matchName = playlist.name.toLowerCase().includes(searchTerm);
-      const matchDescription =
-        playlist.description?.toLowerCase().includes(searchTerm) || false;
-      const matchSongs = playlist.songs.some(
-        (song) =>
-          song.artist.toLowerCase().includes(searchTerm) ||
-          song.title.toLowerCase().includes(searchTerm)
-      );
-
-      return matchGenre || matchName || matchDescription || matchSongs;
-    });
-
-    view.renderPlaylists(filtered, searchTerm); // 👈 skickar söktermen till vyn
-    setupDeleteListeners();
-  });
-};
-
-
-const setupFormListener = () => {
-  const form = document.getElementById('playlistForm');
-
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-
-    const genre = document.getElementById('genre').value.trim();
-    const artist = document.getElementById('artist').value.trim();
-    const song = document.getElementById('song').value.trim();
-
-    if (!genre || !artist || !song) {
-      alert('Fyll i alla fält.');
-      return;
-    }
-
-    const newPlaylist = {
-      genre,
-      name: `${genre} – ${artist}`,
-      description: `Spellista med ${artist} i genren ${genre}`,
-      songs: [{ title: song, artist }],
-    };
-
-    model.addPlaylist(newPlaylist);
-    view.renderPlaylists(model.getAllPlaylists());
-    setupDeleteListeners();
-    form.reset();
-  });
-};
-
+// 🗑️ Ta bort spellista
 const setupDeleteListeners = () => {
   const buttons = document.querySelectorAll('.delete-btn');
   buttons.forEach((btn) => {
@@ -97,7 +24,117 @@ const setupDeleteListeners = () => {
       const id = parseInt(btn.dataset.id);
       model.deletePlaylist(id);
       view.renderPlaylists(model.getAllPlaylists());
-      setupDeleteListeners(); // bind knappar igen efter re-render
+      rebindAll();
     });
   });
 };
+
+// 🗑️ Ta bort låt
+const setupSongDeleteListeners = () => {
+  const buttons = document.querySelectorAll('.delete-song');
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const playlistId = parseInt(btn.dataset.playlistId);
+      const songIndex = parseInt(btn.dataset.songIndex);
+      model.deleteSongFromPlaylist(playlistId, songIndex);
+      view.renderPlaylists(model.getAllPlaylists());
+      rebindAll();
+    });
+  });
+};
+
+// ➕ Duplicera låt i samma spellista
+const setupSongAddListeners = () => {
+  const buttons = document.querySelectorAll('.add-song');
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const playlistId = parseInt(btn.dataset.playlistId);
+      const songIndex = parseInt(btn.dataset.songIndex);
+      const playlist = model.getAllPlaylists().find((p) => p.id === playlistId);
+      const song = playlist.songs[songIndex];
+      playlist.songs.push({ ...song }); // duplicera
+      view.renderPlaylists(model.getAllPlaylists());
+      rebindAll();
+    });
+  });
+};
+
+// 🔁 ➕ Kopiera låt till annan spellista via dropdown
+const setupSongCopyListeners = () => {
+  const buttons = document.querySelectorAll('.add-song');
+  const allPlaylists = model.getAllPlaylists();
+
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const originId = parseInt(btn.dataset.playlistId);
+      const songIndex = parseInt(btn.dataset.songIndex);
+      const dropdown = btn.nextElementSibling;
+
+      // Fyll dropdown med andra spellistor
+      dropdown.innerHTML = '<option value="">Välj spellista</option>';
+      allPlaylists
+        .filter((p) => p.id !== originId)
+        .forEach((p) => {
+          const opt = document.createElement('option');
+          opt.value = p.id;
+          opt.textContent = p.name;
+          dropdown.appendChild(opt);
+        });
+
+      dropdown.classList.remove('hidden');
+
+      dropdown.addEventListener(
+        'change',
+        () => {
+          const targetId = parseInt(dropdown.value);
+          const originPlaylist = allPlaylists.find((p) => p.id === originId);
+          const song = originPlaylist.songs[songIndex];
+          model.addSongToPlaylist(targetId, { ...song });
+
+          view.renderPlaylists(model.getAllPlaylists());
+          rebindAll();
+        },
+        { once: true }
+      ); // bind bara 1 gång
+    });
+  });
+};
+
+// ➕ Lägg till ny låt till vald spellista via formulär
+const setupAddSongForm = () => {
+  const form = document.getElementById('addSongForm');
+  const select = document.getElementById('playlistSelect');
+  const titleInput = document.getElementById('newSongTitle');
+  const artistInput = document.getElementById('newSongArtist');
+
+  const playlists = model.getAllPlaylists();
+  if (!select) return;
+
+  // Fyll dropdown
+  select.innerHTML = '<option value="">-- Välj spellista --</option>';
+  playlists.forEach((p) => {
+    const option = document.createElement('option');
+    option.value = p.id;
+    option.textContent = p.name;
+    select.appendChild(option);
+  });
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const playlistId = parseInt(select.value);
+    const title = titleInput.value.trim();
+    const artist = artistInput.value.trim();
+
+    if (!playlistId || !title || !artist) {
+      alert('Fyll i alla fält.');
+      return;
+    }
+
+    model.addSongToPlaylist(playlistId, { title, artist });
+    view.renderPlaylists(model.getAllPlaylists());
+    rebindAll();
+    form.reset();
+  });
+};
+4
