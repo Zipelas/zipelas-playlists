@@ -38,7 +38,6 @@ export const renderPlaylists = (playlists, searchTerm = '') => {
       'playlist bg-gray-800 text-white p-4 rounded shadow relative';
 
     div.innerHTML = `
-      <!-- Ta bort spellista -->
       <button class="delete-btn absolute top-2 right-2 text-teal-400 text-xl hover:text-red-500"
               title="Ta bort spellista" data-id="${pl.id}">
         ❌
@@ -56,7 +55,6 @@ export const renderPlaylists = (playlists, searchTerm = '') => {
             <span>${song.title} - ${song.artist}</span>
             <div class="flex items-center gap-2">
 
-              <!-- Kopiera till annan spellista -->
               <button class="add-song text-teal-400 hover:text-green-400 text-lg"
                       title="Kopiera låt"
                       data-playlist-id="${pl.id}" data-song-index="${index}">
@@ -65,10 +63,8 @@ export const renderPlaylists = (playlists, searchTerm = '') => {
 
               <select class="playlist-target hidden bg-gray-700 text-white p-1 rounded text-sm"
                       data-song-index="${index}" data-origin-id="${pl.id}">
-                <!-- Alternativ fylls av controller -->
               </select>
 
-              <!-- Ta bort låt -->
               <button class="delete-song text-teal-400 hover:text-red-500 text-lg"
                       title="Ta bort låt"
                       data-playlist-id="${pl.id}" data-song-index="${index}">
