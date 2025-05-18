@@ -23,5 +23,3 @@ Projektet använder **MVC (Model-View-Controller)**:
 ## 🚀 Kom igång
 
 git clone https://github.com/Zipelas/zipelas-playlists.git
-cd zipelas-playlists
-code .
