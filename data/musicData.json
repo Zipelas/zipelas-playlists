@@ -1,0 +1,51 @@
+[
+  {
+    "id": 1,
+    "genre": "Rock",
+    "name": "Rockklassiker",
+    "description": "De bästa rocklåtarna från Iron Maiden och Queen",
+    "songs": [
+      { "title": "The Trooper", "artist": "Iron Maiden" },
+      { "title": "Fear of the Dark", "artist": "Iron Maiden" },
+      { "title": "Run to the Hills", "artist": "Iron Maiden" },
+      { "title": "Hallowed Be Thy Name", "artist": "Iron Maiden" },
+      { "title": "Aces High", "artist": "Iron Maiden" },
+      { "title": "Bohemian Rhapsody", "artist": "Queen" },
+      { "title": "Don't Stop Me Now", "artist": "Queen" },
+      { "title": "We Will Rock You", "artist": "Queen" },
+      { "title": "Somebody to Love", "artist": "Queen" },
+      { "title": "Radio Ga Ga", "artist": "Queen" }
+    ]
+  },
+  {
+    "id": 2,
+    "genre": "Reggae",
+    "name": "Reggae Vibes",
+    "description": "Chilla med Bob Marleys skönaste hits",
+    "songs": [
+      { "title": "No Woman, No Cry", "artist": "Bob Marley" },
+      { "title": "Three Little Birds", "artist": "Bob Marley" },
+      { "title": "Redemption Song", "artist": "Bob Marley" },
+      { "title": "Buffalo Soldier", "artist": "Bob Marley" },
+      { "title": "One Love", "artist": "Bob Marley" }
+    ]
+  },
+  {
+    "id": 3,
+    "genre": "Pop",
+    "name": "Pop Explosion",
+    "description": "Abba och Bee Gees levererar popens pärlor",
+    "songs": [
+      { "title": "Dancing Queen", "artist": "Abba" },
+      { "title": "Mamma Mia", "artist": "Abba" },
+      { "title": "Waterloo", "artist": "Abba" },
+      { "title": "Take a Chance on Me", "artist": "Abba" },
+      { "title": "Gimme! Gimme! Gimme!", "artist": "Abba" },
+      { "title": "Stayin' Alive", "artist": "Bee Gees" },
+      { "title": "How Deep Is Your Love", "artist": "Bee Gees" },
+      { "title": "Night Fever", "artist": "Bee Gees" },
+      { "title": "Tragedy", "artist": "Bee Gees" },
+      { "title": "To Love Somebody", "artist": "Bee Gees" }
+    ]
+  }
+]

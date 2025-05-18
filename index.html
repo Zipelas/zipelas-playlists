@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="sv">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0" />
+    <title>Zipelas Playlists</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-black text-teal-400 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+      <h1 class="text-4xl font-bold mb-6 border-b-2 border-teal-500 pb-2">
+        Zipelas Playlists
+      </h1>
+
+      <!-- Skapa ny spellista -->
+      <form
+        id="playlistForm"
+        class="space-y-4 mb-10">
+        <div>
+          <label class="block text-sm text-white">Playlist</label>
+          <input
+            type="text"
+            id="playlist"
+            class="w-full p-2 bg-gray-800 text-white rounded"
+            placeholder="Namn på spellista"
+            required />
+        </div>
+        <div>
+          <label class="block text-sm text-white">Genre</label>
+          <input
+            type="text"
+            id="genre"
+            class="w-full p-2 bg-gray-800 text-white rounded"
+            placeholder="t.ex. Rock"
+            required />
+        </div>
+        <div>
+          <label class="block text-sm text-white">Artist</label>
+          <input
+            type="text"
+            id="artist"
+            class="w-full p-2 bg-gray-800 text-white rounded"
+            placeholder="t.ex. Queen"
+            required />
+        </div>
+        <div>
+          <label class="block text-sm text-white">Låt</label>
+          <input
+            type="text"
+            id="song"
+            class="w-full p-2 bg-gray-800 text-white rounded"
+            placeholder="t.ex. Bohemian Rhapsody"
+            required />
+        </div>
+        <button
+          type="submit"
+          class="bg-teal-500 text-black px-4 py-2 rounded hover:bg-teal-400">
+          ➕ Skapa spellista
+        </button>
+      </form>
+
+      <!-- Lägg till låt i spellista -->
+      <h2 class="text-2xl font-bold mb-4 text-teal-400">
+        Lägg till låt i befintlig spellista
+      </h2>
+
+      <form
+        id="addSongForm"
+        class="space-y-4 mb-10">
+        <div>
+          <label class="block text-sm text-white">Titel</label>
+          <input
+            type="text"
+            id="newSongTitle"
+            class="w-full p-2 bg-gray-800 text-white rounded"
+            placeholder="t.ex. Africa"
+            required />
+        </div>
+        <div>
+          <label class="block text-sm text-white">Artist</label>
+          <input
+            type="text"
+            id="newSongArtist"
+            class="w-full p-2 bg-gray-800 text-white rounded"
+            placeholder="t.ex. Toto"
+            required />
+        </div>
+        <div>
+          <label class="block text-sm text-white">Välj spellista</label>
+          <select
+            id="playlistSelect"
+            class="w-full p-2 bg-gray-800 text-white rounded"
+            required>
+            <option value="">-- Välj spellista --</option>
+          </select>
+        </div>
+        <button
+          type="submit"
+          class="bg-teal-500 text-black px-4 py-2 rounded hover:bg-teal-400">
+          ➕ Lägg till låt
+        </button>
+      </form>
+
+      <!-- Lista av spellistor -->
+      <div
+        id="playlists"
+        class="space-y-6"></div>
+    </div>
+
+    <script
+      type="module"
+      src="./app.js"></script>
+  </body>
+</html>
